@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        <h4 class="text-center alert alert-info">Add Student</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-success" value="Add">
+        </form>
+    </div>
+        <div class="col-sm-8">
+            <h4 class="text-center alert alert-info"> Show Student Details</h4>
+            
+            {% if stu %}
+            <table class="table table-hover">
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date Of Birth</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for st in stu %}
+                    <tr>
+                    <th scope="row">{{st.id}}</th>
+                    <td>{{st.name}}</td>
+                    <td>{{st.dob}}</td>
+                    <td>{{st.email}}</td>
+                    <td>{{st.mobile}}</td>
+                    <td style="width: 180px;">
+                        <a href="{% url 'updatedata' st.id %}" class="btn btn-warning ">Edit</a>
+                        <form action="{% url 'deletedata' st.id %}" class="d-inline" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                    </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            {% else %}
+            <h4 class="text-center alert alert-warning">No Data Found</h4>
+            {% endif %}
+            </div>
+        </div>
+    <br>
+    <br>
+    <br>   
+{% endblock content %}
